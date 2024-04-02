@@ -3,6 +3,9 @@
 #include "shared.h"
 
 #include "CApplication.h"
+#include "CMultiFilesystem.h"
+#include "CPhysicalFilesystem.h"
+#include "CRenderer.h"
 
 class CGame : private CApplication
 {
@@ -13,6 +16,9 @@ class CGame : private CApplication
 
   private:
     bool m_running;
+    CMultiFilesystem m_filesystem;
+    CRenderer m_renderer;
+    entt::registry m_registry;
 
     void Loop();
 };

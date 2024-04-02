@@ -6,12 +6,21 @@
 
 #include <chrono>
 #include <filesystem>
+#include <fstream>
+#include <ios>
 #include <limits>
 #include <memory>
 #include <string>
 #include <vector>
 
+#include "entt/entt.hpp"
+
 #include "fmt/format.h"
+
+#include "glm/glm.hpp"
+using namespace glm;
+
+#include "qoi.h"
 
 #include "SDL.h"
 

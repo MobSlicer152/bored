@@ -7,20 +7,28 @@ CWindow::CWindow(const std::string &title, u32 width, u32 height, u32 internalWi
     SPDLOG_INFO("Creating {}x{} window titled {} with internal size {}x{}", width, height, title, internalWidth,
                 internalHeight);
 
-    if (SDL_CreateWindowAndRenderer(m_width, m_height, SDL_WINDOW_HIGH_PIXEL_DENSITY | SDL_WINDOW_RESIZABLE, &m_window, &m_renderer) < 0)
+    m_window =
+        SDL_CreateWindow(m_title.c_str(), m_width, m_height, SDL_WINDOW_HIGH_PIXEL_DENSITY | SDL_WINDOW_RESIZABLE);
+    if (!m_window)
     {
         SPDLOG_CRITICAL("Failed to create window: {}", SDL_GetError());
         std::terminate();
     }
 
+    m_renderer = SDL_CreateRenderer(m_window, nullptr, SDL_RENDERER_ACCELERATED);
+    if (!m_renderer)
+    {
+        SPDLOG_CRITICAL("Failed to create renderer: {}", SDL_GetError());
+        std::terminate();
+    }
+
     m_windowId = SDL_GetWindowID(m_window);
 
-    SDL_SetWindowTitle(m_window, m_title.c_str());
-
-    m_surface = SDL_CreateSurface(m_internalWidth, m_internalHeight, SDL_PIXELFORMAT_RGBA8888);
-    if (!m_surface)
+    m_renderTarget = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, m_internalWidth,
+                                       m_internalHeight);
+    if (!m_renderTarget)
     {
-        SPDLOG_CRITICAL("Failed to create window internal surface: {}", SDL_GetError());
+        SPDLOG_CRITICAL("Failed to create window internal texture: {}", SDL_GetError());
         std::terminate();
     }
 
@@ -29,7 +37,7 @@ CWindow::CWindow(const std::string &title, u32 width, u32 height, u32 internalWi
 
 CWindow::~CWindow()
 {
-    SDL_DestroySurface(m_surface);
+    SDL_DestroyTexture(m_renderTarget);
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
 }
@@ -81,4 +89,13 @@ bool CWindow::Update()
     }
 
     return !m_closed;
+}
+
+void CWindow::Present()
+{
+    UseRenderTarget();
+    SDL_RenderPresent(m_renderer);
+    UseBackbuffer();
+    SDL_RenderTexture(m_renderer, m_renderTarget, nullptr, nullptr);
+    SDL_RenderPresent(m_renderer);
 }

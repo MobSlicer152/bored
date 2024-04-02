@@ -3,7 +3,7 @@ add_rules("plugin.vsxmake.autoupdate")
 set_project("game")
 set_version("0.0.0", {build = "%Y%m%d%H%M"})
 
-if is_os("windows") then
+if is_host("windows") then
     set_allowedmodes("debug-gdk", "debug-xbox", "debug-xp", "release-gdk", "release-xbox", "release-xp")
 else
     set_allowedmodes("debug", "release")
@@ -25,7 +25,7 @@ if is_mode("debug-gdk", "release-gdk") then
 elseif is_mode("debug-xbox", "release-xbox") then
     add_defines("_GAMING_XBOX_SCARLETT")
 elseif is_mode("debug-xp", "release-xp") then
-    add_defines("_WIN32_WINVER=0x500")
+    add_defines("_WIN32_WINVER=0x501")
 end
 
 set_languages("cxxlatest")
@@ -40,6 +40,7 @@ add_requires(
     "imgui_sdl3",
     "libsdl3",
     "mimalloc",
+    "qoi",
     "spdlog",
     "stb",
     "xxhash",
@@ -67,6 +68,7 @@ target("game")
         "imgui_sdl3",
         "libsdl3",
         "mimalloc",
+        "qoi",
         "spdlog",
         "stb",
         "xxhash",

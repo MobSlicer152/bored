@@ -11,6 +11,7 @@ class CWindow
     ~CWindow();
 
     bool Update();
+    void Present();
 
     const std::string &GetTitle()
     {
@@ -69,11 +70,26 @@ class CWindow
         return m_renderer;
     }
 
+    SDL_Texture *GetRenderTarget()
+    {
+        return m_renderTarget;
+    }
+
+    void UseRenderTarget()
+    {
+        SDL_SetRenderTarget(m_renderer, m_renderTarget);
+    }
+
+    void UseBackbuffer()
+    {
+        SDL_SetRenderTarget(m_renderer, nullptr);
+    }
+
   protected:
     SDL_Window *m_window;
     u32 m_windowId;
     SDL_Renderer *m_renderer;
-    SDL_Surface *m_surface;
+    SDL_Texture *m_renderTarget;
 
     std::string m_title;
 
