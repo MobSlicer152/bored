@@ -25,6 +25,11 @@ class CRenderer
 
     void DrawLine(const vec2 &start, const vec2 &end, const vec4 &color = vec4(1.0f));
 
+    SDL_Renderer* GetRenderer()
+    {
+        return m_window->GetRenderer();
+    }
+
   private:
     std::shared_ptr<CWindow> m_window;
     vec4 m_clearColor;

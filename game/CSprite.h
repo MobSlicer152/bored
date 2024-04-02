@@ -8,13 +8,16 @@
 class CSprite : IRenderable
 {
   public:
-    CSprite(const CSpriteSheet &sheet, const ivec2 &offset, const ivec2 &size);
+    CSprite(const CSpriteSheet &sheet, const ivec2 &offset, const ivec2 &size)
+        : m_sheet(sheet), m_offset(offset), m_size(size)
+    {
+    }
     ~CSprite() = default;
 
-    void Draw(const ivec2 &position, float zRotation, const vec2 &scale);
+    void Draw(CRenderer &renderer, const ivec2 &position, float zRotation, const vec2 &scale);
 
   private:
-    const CSpriteSheet &sheet;
-    ivec2 offset;
-    ivec2 size;
+    const CSpriteSheet &m_sheet;
+    ivec2 m_offset;
+    ivec2 m_size;
 };

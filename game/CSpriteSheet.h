@@ -8,7 +8,9 @@
 class CSpriteSheet : CImage
 {
   public:
-    CSpriteSheet(const fs::path &path, u32 tileSize = 16) : CImage(path), m_tileSize(tileSize)
+    CSpriteSheet(CRenderer &renderer, const std::shared_ptr<IFilesystem> filesystem, const fs::path &path,
+                 u32 tileSize = 16)
+        : CImage(renderer, filesystem, path), m_tileSize(tileSize)
     {
     }
 
