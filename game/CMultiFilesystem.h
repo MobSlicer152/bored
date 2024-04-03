@@ -4,7 +4,7 @@
 
 #include "IFilesystem.h"
 
-class CMultiFilesystem : IFilesystem
+class CMultiFilesystem : public IFilesystem
 {
   public:
     CMultiFilesystem() = default;

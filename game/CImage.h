@@ -7,13 +7,13 @@
 
 class CRenderer;
 
-class CImage : IRenderable
+class CImage : public IRenderable
 {
   public:
-    CImage(CRenderer &renderer, const std::shared_ptr<IFilesystem> filesystem, const fs::path &path);
+    CImage(std::shared_ptr<CRenderer> renderer, const IFilesystem& filesystem, const fs::path &path);
     ~CImage();
 
-    void Draw(CRenderer &renderer, const ivec2 &position, float zRotation, const vec2 &scale);
+    void Draw(const ivec2 &position, float zRotation = 0.0f, const vec2 &scale = vec2(1.0f));
 
   private:
     SDL_Texture *m_texture;

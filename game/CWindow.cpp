@@ -15,14 +15,14 @@ CWindow::CWindow(const std::string &title, u32 width, u32 height, u32 internalWi
         std::terminate();
     }
 
+    m_windowId = SDL_GetWindowID(m_window);
+
     m_renderer = SDL_CreateRenderer(m_window, nullptr, SDL_RENDERER_ACCELERATED);
     if (!m_renderer)
     {
         SPDLOG_CRITICAL("Failed to create renderer: {}", SDL_GetError());
         std::terminate();
     }
-
-    m_windowId = SDL_GetWindowID(m_window);
 
     m_renderTarget = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, m_internalWidth,
                                        m_internalHeight);
@@ -31,6 +31,8 @@ CWindow::CWindow(const std::string &title, u32 width, u32 height, u32 internalWi
         SPDLOG_CRITICAL("Failed to create window internal texture: {}", SDL_GetError());
         std::terminate();
     }
+
+    SDL_SetTextureScaleMode(m_renderTarget, SDL_SCALEMODE_NEAREST);
 
     SDL_ShowWindow(m_window);
 }

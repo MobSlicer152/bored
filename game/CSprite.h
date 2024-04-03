@@ -5,7 +5,7 @@
 #include "CSpriteSheet.h"
 #include "IRenderable.h"
 
-class CSprite : IRenderable
+class CSprite : public IRenderable
 {
   public:
     CSprite(const CSpriteSheet &sheet, const ivec2 &offset, const ivec2 &size)
@@ -14,7 +14,7 @@ class CSprite : IRenderable
     }
     ~CSprite() = default;
 
-    void Draw(CRenderer &renderer, const ivec2 &position, float zRotation, const vec2 &scale);
+    void Draw(const ivec2 &position, float zRotation = 0.0f, const vec2 &scale = vec2(1.0f));
 
   private:
     const CSpriteSheet &m_sheet;

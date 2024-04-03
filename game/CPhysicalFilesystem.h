@@ -4,10 +4,10 @@
 
 #include "IFilesystem.h"
 
-class CPhysicalFilesystem : IFilesystem
+class CPhysicalFilesystem : public IFilesystem
 {
   public:
-    CPhysicalFilesystem(const fs::path &rootPath = fs::path("/"), bool readOnly = true);
+    CPhysicalFilesystem(const fs::path &rootPath = fs::path(""), bool readOnly = true);
     ~CPhysicalFilesystem() = default;
 
     bool Exists(const fs::path &path) const;

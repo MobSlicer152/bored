@@ -31,6 +31,8 @@ end
 set_languages("cxxlatest")
 set_exceptions("cxx")
 
+add_defines("USE_MIMALLOC=1")
+
 add_repositories("local-repo xmake")
 add_requires(
     "box2d",

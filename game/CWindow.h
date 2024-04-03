@@ -7,7 +7,7 @@
 class CWindow
 {
   public:
-    CWindow(const std::string &title, u32 width, u32 height, u32 internalWidth = 640, u32 internalHeight = 480);
+    CWindow(const std::string &title, u32 width, u32 height, u32 internalWidth = 512, u32 internalHeight = 384);
     ~CWindow();
 
     bool Update();
